@@ -5,10 +5,45 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  background: url(/wallpaper.jpg);
+  background-size: cover;
 }
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+.footer {
+  color: #fff;
+}
+
+:root {
+  --nat-navbar-bg: rgb(11, 46, 0);
+  --nat-navbar-bg-rgb:11, 46, 0;
+  --nat-navbar-text-color: white;
+  --nat-navbar-highlight-text: khaki;
+}
+
+footer, footer a {
+  color: var(--nat-navbar-text-color);
+}
+
+body {
+  --bs-dark: var(--nat-navbar-bg);
+  --bs-dark-rgb: var(--nat-navbar-bg-rgb);
+  background: url(/wallpaper.jpg);
+  background-size: cover;
+}
+
+body .navbar {
+  --bs-navbar-active-color: var(--nat-navbar-highlight-text);
+  --bs-navbar-brand-color: var(--nat-navbar-text-color);
+  --bs-navbar-brand-hover-color: var(--nat-navbar-highlight-text);
+  --bs-navbar-color: var(--nat-navbar-text-color);
+  --bs-navbar-hover-color: var(--nat-navbar-highlight-text);
+}
+
+.bg-dark a.dropdown-item {
+  color: var(--nat-navbar-bg);
 }
