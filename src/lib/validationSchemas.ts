@@ -15,10 +15,12 @@ export const EditStuffSchema = Yup.object({
   owner: Yup.string().required(),
 });
 
-export interface Contact {
+export type Contact = {
+  email: string;
   firstName: string;
   lastName: string;
-  address: string;
-  image: string;
-  description: string;
-}
+  address: string | null;
+  image: string | null;
+  description: string | null;
+  owner: string;
+};

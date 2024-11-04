@@ -7,8 +7,8 @@ interface ContactCardProps {
   contact: Contact;
 }
 
-const ContactCard = ({ contact }: ContactCardProps) => (
-  <Card className="h-100 p-1">
+const ContactCardAdmin = ({ contact }: ContactCardProps) => (
+  <Card className="h-100 p-0.3">
     <Card.Body className="d-flex flex-column">
       <Card.Img
         variant="top"
@@ -22,8 +22,9 @@ const ContactCard = ({ contact }: ContactCardProps) => (
       </Card.Title>
       <Card.Subtitle className="mb-2 text-muted">{contact.address}</Card.Subtitle>
       <Card.Text>{contact.description}</Card.Text>
+      <p className="blockquote-footer">{contact.owner}</p>
     </Card.Body>
   </Card>
 );
 
-export default ContactCard;
+export default ContactCardAdmin;

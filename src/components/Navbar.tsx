@@ -12,6 +12,7 @@ const NavBar: React.FC = () => {
   const currentUser = session?.user?.email;
   const userWithRole = session?.user as { email: string; randomKey: string };
   const role = userWithRole?.randomKey;
+  console.log('Current role:', role);
   const pathName = usePathname();
   return (
     <Navbar bg="dark" expand="lg">
