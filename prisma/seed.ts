@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PrismaClient, Role, Condition } from '@prisma/client';
 import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
@@ -42,6 +43,18 @@ async function main() {
         quantity: data.quantity,
         owner: data.owner,
         condition,
+      },
+    });
+  });
+  // Option 1: Clear contacts first
+  await prisma.contact.deleteMany();
+
+  // Then proceed with your seeding
+  config.defaultContacts.forEach(async (contact, index) => {
+    console.log(`  Adding contact: ${contact.firstName} ${contact.lastName} (${contact.owner})`);
+    await prisma.contact.create({
+      data: {
+        ...contact,
       },
     });
   });
