@@ -48,4 +48,5 @@ model Contact {
   image       String
   description String
   owner       String
+  email       String
 }

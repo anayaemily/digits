@@ -7,28 +7,22 @@ import { Contact } from '@/lib/validationSchemas';
 import ContactCard from '@/components/ContactCard';
 import { prisma } from '@/lib/prisma';
 
-/** Render a list of stuff for the logged in user. */
+/** Render a list of contacts for the logged in user. */
 const ListPage = async () => {
   // Protect the page, only logged in users can access it.
   const session = await getServerSession(authOptions);
   loggedInProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
-      // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
 
-  // Fetch contacts for the logged-in user with distinct records
+  // Fetch contacts for the logged-in user
   const contacts = await prisma.contact.findMany({
     where: {
-      owner: session?.user?.email || '',
+      owner: session?.user?.email ?? '',
     },
-    orderBy: {
-      lastName: 'asc',
-    },
-    distinct: ['email'],
   });
-  console.log('Contacts fetched:', contacts);
 
   return (
     <main>
@@ -38,7 +32,7 @@ const ListPage = async () => {
             <h1 className="text-center">Contacts</h1>
             <Row xs={1} md={2} lg={3} className="g-4">
               {contacts.map((contact) => (
-                <Col key={contact.id}>
+                <Col key={`Contact-${contact.firstName}`}>
                   <ContactCard contact={contact} />
                 </Col>
               ))}
