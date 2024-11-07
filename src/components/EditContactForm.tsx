@@ -7,15 +7,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Contact } from '@prisma/client';
 import { EditContactSchema } from '@/lib/validationSchemas';
 import { editContact } from '@/lib/dbActions';
-
-const onSubmit = async (data: Contact) => {
-  await editContact(data);
-  swal('Success', 'Your contact has been updated', 'success', {
-    timer: 2000,
-  });
-};
+import { useRouter } from 'next/navigation';
 
 const EditContactForm = ({ contact }: { contact: Contact }) => {
+  const router = useRouter();
+
+  const onSubmit = async (data: Contact) => {
+    await editContact(data);
+    await swal('Success', 'Your contact has been updated', 'success', {
+      timer: 2000,
+    });
+    router.push('/list');
+  };
+
   const {
     register,
     handleSubmit,
@@ -36,7 +40,6 @@ const EditContactForm = ({ contact }: { contact: Contact }) => {
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <input type="hidden" {...register('id')} value={contact.id} />
-
                 <Form.Group>
                   <Form.Label>First Name</Form.Label>
                   <input
@@ -47,6 +50,7 @@ const EditContactForm = ({ contact }: { contact: Contact }) => {
                   />
                   <div className="invalid-feedback">{errors.firstName?.message}</div>
                 </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Last Name</Form.Label>
                   <input
@@ -57,6 +61,7 @@ const EditContactForm = ({ contact }: { contact: Contact }) => {
                   />
                   <div className="invalid-feedback">{errors.lastName?.message}</div>
                 </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Address</Form.Label>
                   <input
@@ -67,8 +72,9 @@ const EditContactForm = ({ contact }: { contact: Contact }) => {
                   />
                   <div className="invalid-feedback">{errors.address?.message}</div>
                 </Form.Group>
+
                 <Form.Group>
-                  <Form.Label>Image</Form.Label>
+                  <Form.Label>Image URL</Form.Label>
                   <input
                     type="text"
                     {...register('image')}
@@ -77,16 +83,19 @@ const EditContactForm = ({ contact }: { contact: Contact }) => {
                   />
                   <div className="invalid-feedback">{errors.image?.message}</div>
                 </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Description</Form.Label>
-                  <input
-                    type="text"
+                  <textarea
                     {...register('description')}
                     defaultValue={contact.description}
                     className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                   />
                   <div className="invalid-feedback">{errors.description?.message}</div>
                 </Form.Group>
+
+                <input type="hidden" {...register('owner')} value={contact.owner} />
+
                 <Form.Group className="form-group">
                   <Row className="pt-3">
                     <Col>
