@@ -17,10 +17,13 @@ const ListPage = async () => {
     } | null,
   );
 
-  // Fetch contacts for the logged-in user
+  // Fetch contacts and notes for the logged-in user
   const contacts = await prisma.contact.findMany({
     where: {
       owner: session?.user?.email ?? '',
+    },
+    include: {
+      notes: true,
     },
   });
 
@@ -33,7 +36,7 @@ const ListPage = async () => {
             <Row xs={1} md={2} lg={3} className="g-4">
               {contacts.map((contact) => (
                 <Col key={`Contact-${contact.firstName}`}>
-                  <ContactCard contact={contact} />
+                  <ContactCard contact={contact} notes={contact.notes} />
                 </Col>
               ))}
             </Row>
